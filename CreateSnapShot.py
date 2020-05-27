@@ -5,22 +5,15 @@ from PyQt5.QtCore import QObject
 from PyQt5.QtCore import QBuffer
 from PyQt5 import QtCore
 
-
 from UM.Extension import Extension
 from cura.CuraApplication import CuraApplication
 
-from typing import List
 
-from UM.Application import Application
-from UM.Logger import Logger
 from UM.MimeTypeDatabase import MimeTypeDatabase, MimeType
 
 from cura.Snapshot import Snapshot
-from cura.Utils.Threading import call_on_qt_thread
-from UM.Scene.Camera import Camera
-from UM.Scene.Iterator.DepthFirstIterator import DepthFirstIterator
 
-
+from UM.Logger import Logger
 from UM.Message import Message
 
 from UM.i18n import i18nCatalog
@@ -58,7 +51,6 @@ class CreateSnapShot(Extension, QObject,):
             Logger.logException("w", "Failed to create snapshot image")
             self._snapshot = None
             
-    @call_on_qt_thread
     def _write(self, Filename: str):
 
         self._createSnapshot()
