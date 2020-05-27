@@ -9,8 +9,6 @@ from UM.Extension import Extension
 from cura.CuraApplication import CuraApplication
 
 
-from UM.MimeTypeDatabase import MimeTypeDatabase, MimeType
-
 from cura.Snapshot import Snapshot
 
 from UM.Logger import Logger
