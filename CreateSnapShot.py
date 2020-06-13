@@ -12,6 +12,7 @@ from cura.CuraApplication import CuraApplication
 #from cura.Utils.Threading import call_on_qt_thread
 
 import threading
+import time
 
 #from cura.Snapshot import Snapshot
 from .Snapshot import Snapshot
@@ -49,8 +50,11 @@ def call_on_qt_thread(func):
         inter_call_object = InterCallObject()
         new_args = tuple([inter_call_object] + list(args)[:])
         Logger.log("d", "new_args = %s", new_args)
+        job_done = threading.Event()
         CuraApplication.getInstance().callLater(_handle_call, *new_args, **kwargs)
-        inter_call_object.finish_event.wait()
+        #job_done.wait()
+        time.sleep(10)
+        # inter_call_object.finish_event.wait()
         return inter_call_object.result
     return _call_on_qt_thread_wrapper
     
@@ -76,7 +80,7 @@ class CreateSnapShot(Extension):
         self._message = Message(catalog.i18nc("@info:status", "Creating .PNG file : %s" % (PngFile)), title = catalog.i18nc("@title", "SNAPSHOT"))
         self._message.show()
     
-    @call_on_qt_thread  
+     
     def _get_snapshot_image(self, width, height) -> QImage:
 
         # must be called from the main thread because of OpenGL
@@ -88,7 +92,7 @@ class CreateSnapShot(Extension):
 
         return None
 
-  
+    @call_on_qt_thread 
     def _write(self, Filename: str):
 
 
